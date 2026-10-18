@@ -369,10 +369,11 @@ body{overscroll-behavior-y:none}
 header.sticky{transform:translateZ(0)}
 #tierModes,#tierSearch,#tierBoardBody{display:none!important}
 .bg-slate-500{background-color:#64748b}
+.fighter-card{box-shadow:none!important}
 .flash-card{outline:2px solid #38bdf8;outline-offset:2px;box-shadow:0 0 0 6px rgba(56,189,248,.3)!important;transition:box-shadow .3s}
 .bg-grid { background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px); background-size: 20px 20px; }
 .glass { background: rgba(30, 27, 46, 0.92); border: 1px solid rgba(255, 255, 255, 0.1); }
-#fighterList .fighter-card, #bossList .fighter-card { content-visibility: auto; contain-intrinsic-size: auto 480px; }
+#fighterList .fighter-card, #bossList .fighter-card { content-visibility: auto; contain-intrinsic-size: auto 510px; }
 button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); }
@@ -4105,7 +4106,55 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
       }, ms));
     }
 
+    // ---- Nút "Quay lại": nhớ vị trí + bộ lọc trước khi bấm tên để nhảy tới tướng/nhân vật ----
+    const navBackStack = [];
+    function captureNav() {
+      return {
+        y: window.scrollY,
+        elem: elemFilterVal, role: roleFilterVal,
+        q: document.getElementById('searchInput').value,
+        ch: document.getElementById('charFilter').value,
+        panel: panelOpen, tab: boardState.tab
+      };
+    }
+    function pushNav(snap) {
+      navBackStack.push(snap);
+      if (navBackStack.length > 20) navBackStack.shift();
+      updateBackBtn();
+    }
+    function updateBackBtn() {
+      let b = document.getElementById('navBackBtn');
+      if (!b) {
+        b = document.createElement('button');
+        b.id = 'navBackBtn';
+        b.type = 'button';
+        b.onclick = goBack;
+        b.style.cssText = 'position:fixed;left:14px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:60;display:none;align-items:center;gap:6px;padding:10px 16px;border-radius:9999px;background:#7e22ce;color:#fff;font-weight:800;font-size:13px;border:2px solid #c084fc;box-shadow:0 6px 20px rgba(0,0,0,.5);cursor:pointer';
+        document.body.appendChild(b);
+      }
+      b.style.display = navBackStack.length ? 'flex' : 'none';
+      b.textContent = '↩ Quay lại' + (navBackStack.length > 1 ? ' (' + navBackStack.length + ')' : '');
+    }
+    function goBack() {
+      const s = navBackStack.pop();
+      if (!s) return;
+      const cur = captureNav();
+      const changed = cur.elem !== s.elem || cur.role !== s.role || cur.q !== s.q || cur.ch !== s.ch || cur.panel !== s.panel || cur.tab !== s.tab;
+      if (changed) {
+        elemFilterVal = s.elem; roleFilterVal = s.role; panelOpen = s.panel; boardState.tab = s.tab;
+        document.getElementById('searchInput').value = s.q;
+        document.getElementById('charFilter').value = s.ch;
+        syncTierPanel(); renderFilterChips(); renderFighters();
+        mountUntil(() => document.documentElement.scrollHeight >= s.y + window.innerHeight + 300);
+      }
+      updateBackBtn();
+      const go = () => window.scrollTo({ top: s.y, behavior: 'instant' });
+      go();
+      [80, 300].forEach(ms => setTimeout(go, ms));
+    }
+
     function goToCharacter(name) {
+      pushNav(captureNav());
       elemFilterVal = '';
       roleFilterVal = '';
       document.getElementById('searchInput').value = '';
@@ -4116,10 +4165,13 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
     }
 
     function goToFighter(name) {
+      const _snap = captureNav();
       const findCard = () => document.querySelector('#fighterList .fighter-card[data-fighter="' + CSS.escape(name) + '"], #bossList .fighter-card[data-fighter="' + CSS.escape(name) + '"]');
-      flushMount(); let card = findCard();
-      if (!card) { clearAllFilters(); flushMount(); card = findCard(); }
+      let card = findCard();
+      if (!card) { mountUntil(findCard); card = findCard(); }
+      if (!card) { clearAllFilters(); mountUntil(findCard); card = findCard(); }
       if (!card) return;
+      pushNav(_snap);
       requestAnimationFrame(() => {
         jumpTo(card);
         card.classList.add('flash-card');
@@ -4141,10 +4193,11 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
         fr.forEach((d, c) => c.appendChild(d));
       };
       const step = () => { raf = 0; if (dead) return; run(6); if (i < queue.length) raf = requestAnimationFrame(step); else _job = null; };
-      _job = { stop() { dead = true; cancelAnimationFrame(raf); }, flush() { dead = true; cancelAnimationFrame(raf); run(1e9); _job = null; } };
+      _job = { stop() { dead = true; cancelAnimationFrame(raf); }, until(pred) { while (!dead && i < queue.length && !pred()) run(10); }, flush() { dead = true; cancelAnimationFrame(raf); run(1e9); _job = null; } };
       if (queue.length) raf = requestAnimationFrame(step); else _job = null;
     }
     function flushMount() { if (_job) _job.flush(); }
+    function mountUntil(pred) { if (!pred() && _job) _job.until(pred); }
     function renderFighters() {
       const charVal = document.getElementById('charFilter').value;
       const rawQuery = document.getElementById('searchInput').value.trim();
@@ -4441,4 +4494,4 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
       update();
     })();
   </script>
-</body></html>
+<button id="navBackBtn" type="button" style="position: fixed; left: 14px; bottom: calc(20px + env(safe-area-inset-bottom,0px)); z-index: 60; display: none; align-items: center; gap: 6px; padding: 10px 16px; border-radius: 9999px; background: rgb(126, 34, 206); color: rgb(255, 255, 255); font-weight: 800; font-size: 13px; border: 2px solid rgb(192, 132, 252); box-shadow: rgba(0, 0, 0, 0.5) 0px 6px 20px; cursor: pointer;">↩ Quay lại</button></body></html>
