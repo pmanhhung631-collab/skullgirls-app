@@ -651,7 +651,7 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
 </section>
 </main>
 
-<button aria-label="Lên đầu trang" id="backToTop" style="position: fixed; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 9999; width: 48px; height: 48px; border-radius: 9999px; border: 1px solid rgba(216, 180, 254, 0.6); background: rgb(147, 51, 234); color: rgb(255, 255, 255); font-size: 22px; font-weight: 800; line-height: 1; cursor: pointer; box-shadow: rgba(88, 28, 135, 0.5) 0px 8px 20px; opacity: 0; pointer-events: none; transform: translateY(8px); transition: opacity 0.2s, transform 0.2s; display: flex; align-items: center; justify-content: center;" title="Lên đầu trang" type="button">⇧</button>
+<button aria-label="Lên đầu trang" id="backToTop" style="position: fixed; right: 16px; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); z-index: 9999; width: 48px; height: 48px; border-radius: 9999px; border: 1px solid rgba(216, 180, 254, 0.6); background: rgb(147, 51, 234); color: rgb(255, 255, 255); font-size: 22px; font-weight: 800; line-height: 1; cursor: pointer; box-shadow: rgba(88, 28, 135, 0.5) 0px 8px 20px; opacity: 1; pointer-events: auto; transform: translateY(0px); transition: opacity 0.2s, transform 0.2s; display: flex; align-items: center; justify-content: center;" title="Lên đầu trang" type="button">⇧</button>
 
 
 <script>
@@ -4704,7 +4704,16 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
     if (fx && fx.char === 'Painwheel' && PW_WHY[n]) return { text: PW_WHY[n], src: 'Theo mục khắc chế Painwheel' };
     const f = byName(x), c = ((f && f.counter) || '') + ' ' + ((f && counterMore[f.name]) || '');
     if ((beatsMore[n] || []).includes(x) && (beatsNotes[n] || [])[0]) return { text: beatsNotes[n][0], src: 'Theo mục khắc chế của ' + esc(n) };
-    const sents = c.split(/(?<=[.;])\s+/);
+    // counterMore có HTML (<br>, <b>): đổi sang chữ thường và ưu tiên dòng gạch đầu dòng nhắc đúng fighter
+    const plain = c.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]+>/g, '').replace(/&amp;/g, '&');
+    const lines = plain.split('\n').map(z => z.trim()).filter(Boolean);
+    const bl = lines.find(l => l.startsWith('•') && l.includes(n));
+    if (bl) {
+      let t = bl.replace(/^•\s*/, '').replace(/^[^:]{0,80}\):\s*/, '');
+      t = t.charAt(0).toUpperCase() + t.slice(1);
+      return { text: t, src: 'Theo mục Cách counter của ' + esc(x) };
+    }
+    const sents = lines.join(' ').split(/(?<=[.;])\s+/);
     const hit = sents.filter(s => s.includes(n)).slice(0, 1);
     if (hit.length) return { text: onlyAbout(hit[0], n), src: 'Theo mục Cách counter của ' + esc(x) };
     const bn = (beatsNotes[n] || [])[0];
