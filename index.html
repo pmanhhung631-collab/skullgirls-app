@@ -556,6 +556,23 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
 <p class="qz-t">Cho một fighter địch, chọn đúng fighter khắc được nó. Đáp án lấy từ mục "Bị khắc bởi" của cẩm nang. Máy tự xếp câu hỏi: fighter 💎 Kim cương hoặc 🔒 khó khắc (ít counter) hỏi trước, sau đó giảm dần.</p>
 <div id="qzBody"><button type="button" class="qz-go" id="qzStart">Bắt đầu chơi</button></div>
 </section>
+<!-- Khắc chế theo Modifier -->
+<section class="glass rounded-2xl p-4 sm:p-5 space-y-3 shadow-xl" id="modSection">
+<style>
+#modSection .md-chip{flex:0 0 auto;white-space:nowrap;padding:.35rem .7rem;border-radius:9999px;font-size:11px;font-weight:800;border:1px solid #475569;background:#0f172a;color:#cbd5e1;cursor:pointer}
+#modSection .md-chip.on{background:#3b0764;border-color:#a855f7;color:#fff;box-shadow:0 0 0 2px #a855f7}
+#modSection .md-box{border-radius:.75rem;padding:.65rem;border:1px solid #334155;background:rgba(2,6,23,.55)}
+#modSection .md-h{font-size:10px;font-weight:800;letter-spacing:.04em;margin-bottom:.4rem}
+#modSection .md-f{display:inline-block;margin:0 .3rem .3rem 0;padding:.15rem .5rem;border-radius:9999px;font-size:11px;font-weight:700;border:1px solid #475569;background:#1e293b;color:#e2e8f0;cursor:pointer}
+#modSection .md-f.d{border-color:#22d3ee}#modSection .md-f.g{border-color:#fbbf24}#modSection .md-f.s{border-color:#cbd5e1}#modSection .md-f.b{border-color:#ea580c}
+#modSection .md-t{font-size:11px;color:#94a3b8;line-height:1.45}
+#modSection .md-more{font-size:11px;font-weight:800;color:#d8b4fe;background:none;border:0;cursor:pointer;padding:.1rem 0}
+</style>
+<div class="flex items-center justify-between gap-2"><h2 class="text-base sm:text-lg font-bold text-slate-100">🎯 Khắc Chế Theo Modifier</h2><span class="md-t" id="modCount">4 tướng gây · 35 tướng bị khắc</span></div>
+<p class="md-t">Dựa trên bảng Modifier: chọn một hiệu ứng để xem tướng nào gây ra nó và tướng nào bị nó khắc. Danh sách tự dò từ mục NỘI TẠI của từng fighter (chỉ là gợi ý, hãy đối chiếu thẻ fighter).</p>
+<div style="display:flex;gap:.4rem;overflow-x:auto;padding-bottom:.25rem" id="modChips"><button type="button" class="md-chip" data-m="curse">CURSE</button><button type="button" class="md-chip" data-m="imm">IMMUNITY</button><button type="button" class="md-chip" data-m="hb">HEAL BLOCK</button><button type="button" class="md-chip" data-m="bleed">BLEED / HEAVY BLEED</button><button type="button" class="md-chip" data-m="sm">DISABLE SPECIALS</button><button type="button" class="md-chip" data-m="bb">DISABLE BLOCKBUSTERS</button><button type="button" class="md-chip on" data-m="tag">DISABLE TAG-INS</button><button type="button" class="md-chip" data-m="wit">WITHER / SLOW</button><button type="button" class="md-chip" data-m="qui">QUIETUS</button><button type="button" class="md-chip" data-m="doom">DOOM</button><button type="button" class="md-chip" data-m="dead">DEADEYE</button><button type="button" class="md-chip" data-m="ab">ARMOR BREAK</button><button type="button" class="md-chip" data-m="cri">CRIPPLE</button><button type="button" class="md-chip" data-m="gb">GUARD BREAK</button></div>
+<div id="modBody" style="display:grid;gap:.6rem"><div class="md-box" style="border-color:#7e22ce"><div class="md-h" style="color:#d8b4fe">DISABLE TAG-INS</div><div style="font-size:13px;color:#e2e8f0;line-height:1.5">Ngăn không cho đổi nhân vật.</div><div class="md-t" style="margin-top:.35rem">💡 Khắc cả đội phụ thuộc vào đổi người để gỡ DEBUFF hoặc kích nội tại.</div></div><div class="md-box"><div class="md-h" style="color:#fb7185">⚔️ TƯỚNG GÂY DISABLE TAG-INS (4)</div><div data-k="g"><button type="button" class="md-f d" data-n="Wind Stalker" title="Ms. Fortune">🌪️ Wind Stalker ↗</button><button type="button" class="md-f g" data-n="Buffer Zone" title="Robo-Fortune">🌪️ Buffer Zone ↗</button><button type="button" class="md-f g" data-n="Pillow Talk" title="Beowulf">🌪️ Pillow Talk ↗</button><button type="button" class="md-f g" data-n="Stellar Huntress" title="Black Dahlia">🌙 Stellar Huntress ↗</button></div></div><div class="md-box"><div class="md-h" style="color:#34d399">🎯 BỊ KHẮC: TƯỚNG DỰA VÀO TAG IN / TAG OUT (35)</div><div data-k="v"><button type="button" class="md-f d" data-n="Angel Maker" title="Umbrella">💧 Angel Maker ↗</button><button type="button" class="md-f d" data-n="Comet Custodian" title="Marie">🌪️ Comet Custodian ↗</button><button type="button" class="md-f d" data-n="Creature of Habit" title="Double">🌪️ Creature of Habit ↗</button><button type="button" class="md-f d" data-n="Dream Catcher" title="Peacock">☀️ Dream Catcher ↗</button><button type="button" class="md-f d" data-n="Dream Girl" title="Parasoul">🌪️ Dream Girl ↗</button><button type="button" class="md-f d" data-n="Fatal Fray" title="Ms. Fortune">☀️ Fatal Fray ↗</button><button type="button" class="md-f d" data-n="Freeze Frame" title="Peacock">💧 Freeze Frame ↗</button><button type="button" class="md-f d" data-n="Heartless" title="Marie">🌙 Heartless ↗</button><button type="button" class="md-f d" data-n="Megalomaniac" title="Marie">💧 Megalomaniac ↗</button><button type="button" class="md-f d" data-n="Unholy Host" title="Black Dahlia">🌙 Unholy Host ↗</button><button type="button" class="md-f d" data-n="Wind Stalker" title="Ms. Fortune">🌪️ Wind Stalker ↗</button><button type="button" class="md-f g" data-n="Brain Freeze" title="Cerebella">💧 Brain Freeze ↗</button><button type="button" class="md-f g" data-n="Buffer Zone" title="Robo-Fortune">🌪️ Buffer Zone ↗</button><button type="button" class="md-f g" data-n="Feathered Edges" title="Fukua">💧 Feathered Edges ↗</button><button type="button" class="md-f g" data-n="High Ruler" title="Parasoul">☀️ High Ruler ↗</button><button type="button" class="md-f g" data-n="Ionic Icon" title="Peacock">☀️ Ionic Icon ↗</button><button type="button" class="md-f g" data-n="Lapis Luxury" title="Eliza">💧 Lapis Luxury ↗</button><button type="button" class="md-f g" data-n="Pillow Talk" title="Beowulf">🌪️ Pillow Talk ↗</button><button type="button" class="md-f g" data-n="Red Velvet" title="Eliza">🔥 Red Velvet ↗</button><button type="button" class="md-f g" data-n="Space Case" title="Umbrella">🌙 Space Case ↗</button><button type="button" class="md-f g" data-n="Star-Crossed" title="Parasoul">🌪️ Star-Crossed ↗</button><button type="button" class="md-f g" data-n="Stellar Huntress" title="Black Dahlia">🌙 Stellar Huntress ↗</button><button type="button" class="md-f g" data-n="Superluminal" title="Valentine">🌪️ Superluminal ↗</button><button type="button" class="md-f g" data-n="Thrill Shrieker" title="Squigly">🔥 Thrill Shrieker ↗</button><button type="button" class="md-f g" data-n="Xenomorph" title="Double">🌙 Xenomorph ↗</button><button type="button" class="md-f s" data-n="Dame Slayer" title="Black Dahlia">🌪️ Dame Slayer ↗</button><button type="button" class="md-f s" data-n="No Egrets" title="Parasoul">💧 No Egrets ↗</button><button type="button" class="md-f s" data-n="Prism Plumage" title="Peacock">⚪ Prism Plumage ↗</button><button type="button" class="md-f s" data-n="Rock Star" title="Filia">☀️ Rock Star ↗</button><button type="button" class="md-f b" data-n="Bassline" title="Big Band">🌪️ Bassline ↗</button></div><button type="button" class="md-more" data-all="v">Hiện tất cả 35 ▾</button></div></div>
+</section>
 <!-- Tra cứu Fighter -->
 <section class="glass rounded-2xl p-4 sm:p-5 space-y-3 shadow-xl" id="fighterSection">
 <div class="flex items-center gap-2">
@@ -4747,6 +4764,80 @@ button.cursor-pointer:not([class*="active:scale"]):active{transform:scale(.97)}
     const b = e.target.closest('.qz-btn'); if (b) answer(b);
   });
   stats();
+})();
+</script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
+  const R = s => new RegExp(s, 'i');
+  const DEBUFFS = 'DEBUFF|BLEED|CURSE|HEX|DOOM|STUN|SLOW|WITHER|GUARD BREAK|ARMOR BREAK|CRIPPLE|DEATH MARK|FATIGUE|IMMOBILIZE|HEAL BLOCK|DISABLE|QUIETUS|POWER SURGE|SLIME|INVERSE';
+  const MODS = [
+    { id: 'curse', n: 'CURSE', d: 'Phá hỏng BUFF: ngăn không cho áp dụng BUFF mới lên đối thủ.', hit: 'CURSE',
+      min: 3, vt: 'Tướng sống nhờ tự cho mình BUFF', v: 'ARMOR(?! BREAK)|BARRIER|REGEN|ENRAGE|HASTE|THORNS|EVASION|PRECISION|INVINCIBLE|BLESSING|FINAL STAND|UNFLINCHING|AUTO.?BLOCK|DEADEYE|IMMUNITY',
+      tip: 'Gỡ/né: IMMUNITY chặn DEBUFF mới (phải có trước), hoặc dùng fighter xóa DEBUFF.' },
+    { id: 'imm', n: 'IMMUNITY', d: 'BUFF: ngăn DEBUFF mới. Khắc các tướng chuyên gây DEBUFF.', hit: 'IMMUNITY',
+      min: 3, vt: 'Tướng dựa vào gây DEBUFF', v: DEBUFFS, pierce: 'không thể ngăn chặn|unstoppable', pt: 'Gây DEBUFF "không thể ngăn chặn" (xuyên IMMUNITY)',
+      tip: 'Đừng mang IMMUNITY khi đối thủ có CURSE hoặc DEBUFF không thể ngăn chặn.' },
+    { id: 'hb', n: 'HEAL BLOCK', d: 'Ngăn chặn hồi máu từ mọi nguồn.', hit: 'HEAL BLOCK',
+      vt: 'Tướng hồi máu / REGEN / MIASMA', v: 'REGEN|MIASMA|BLESSING|hồi\\s*[\\d/.,]+\\s*%|hồi máu|hồi HP|HEAL(?! BLOCK)',
+      tip: 'Muốn đảo ngược hồi máu thay vì chặn thì dùng INVERSE POLARITY (xem mục mẹo bên dưới).' },
+    { id: 'bleed', n: 'BLEED / HEAVY BLEED', d: 'Mất 1% / 2% máu tối đa mỗi giây; loại bỏ REGEN và HEAVY REGEN khi kích hoạt.', hit: 'BLEED',
+      vt: 'Tướng sống nhờ REGEN', v: 'REGEN', tip: 'BLEED xóa REGEN ngay khi áp dụng.' },
+    { id: 'sm', n: 'DISABLE SPECIALS', d: 'Khóa Special Move của đối thủ.', hit: 'DISABLE SPECIAL',
+      vt: 'Tướng dựa vào Special Move', v: 'SPECIAL MOVE|\\bSM\\b' },
+    { id: 'bb', n: 'DISABLE BLOCKBUSTERS', d: 'Ngăn sử dụng BLOCKBUSTER.', hit: 'DISABLE BLOCKBUSTER',
+      vt: 'Tướng dựa vào BLOCKBUSTER', v: 'BLOCKBUSTER|\\bBB\\b' },
+    { id: 'tag', n: 'DISABLE TAG-INS', d: 'Ngăn không cho đổi nhân vật.', hit: 'DISABLE TAG',
+      vt: 'Tướng dựa vào TAG IN / TAG OUT', v: 'TAG.?IN|TAG.?OUT|đổi người',
+      tip: 'Khắc cả đội phụ thuộc vào đổi người để gỡ DEBUFF hoặc kích nội tại.' },
+    { id: 'wit', n: 'WITHER / SLOW', d: 'WITHER giảm 5% mức nạp BB mỗi giây; SLOW giảm 50% mức nạp BB và loại bỏ HASTE.', hit: 'WITHER|SLOW',
+      vt: 'Tướng cần nạp BB nhanh / dựa HASTE', v: 'HASTE|nạp BLOCKBUSTER|thanh BLOCKBUSTER|METER' },
+    { id: 'qui', n: 'QUIETUS', d: 'Bỏ qua chỉ số RESISTANCE; vô hiệu FINAL STAND và BLESSING.', hit: 'QUIETUS',
+      vt: 'Tướng dựa vào FINAL STAND / BLESSING', v: 'FINAL STAND|BLESSING|RESIST' },
+    { id: 'doom', n: 'DOOM', d: 'Gây tử vong khi hết hạn, bỏ qua INVINCIBLE. Chỉ FINAL STAND chặn được.', hit: 'DOOM',
+      vt: 'Tướng dựa vào INVINCIBLE', v: 'INVINCIBLE', tip: 'FINAL STAND chặn hiệu ứng chết từ DOOM.' },
+    { id: 'dead', n: 'DEADEYE', d: 'BUFF: đòn đánh bỏ qua phòng thủ, không kích hoạt AUTO-BLOCK, UNFLINCHING, EVASION, THORNS.', hit: 'DEADEYE',
+      vt: 'Tướng dựa vào phòng thủ / né / phản đòn', v: 'ARMOR(?! BREAK)|EVASION|THORNS|AUTO.?BLOCK|UNFLINCHING' },
+    { id: 'ab', n: 'ARMOR BREAK', d: 'Tăng 20% sát thương nhận vào; loại bỏ ARMOR khi kích hoạt.', hit: 'ARMOR BREAK',
+      vt: 'Tướng dựa vào ARMOR', v: 'ARMOR(?! BREAK)' },
+    { id: 'cri', n: 'CRIPPLE', d: 'Giảm 20% sát thương gây ra; loại bỏ ENRAGE khi kích hoạt.', hit: 'CRIPPLE',
+      vt: 'Tướng dựa vào ENRAGE', v: 'ENRAGE' },
+    { id: 'gb', n: 'GUARD BREAK', d: '10% bị bỏ chặn ở đòn tiếp theo; loại bỏ AUTO-BLOCK khi kích hoạt.', hit: 'GUARD BREAK',
+      vt: 'Tướng dựa vào AUTO-BLOCK', v: 'AUTO.?BLOCK' }
+  ];
+  const RK = { diamond: 0, gold: 1, silver: 2, bronze: 3 }, RC = { diamond: 'd', gold: 'g', silver: 's', bronze: 'b' };
+  const LIM = 30;
+  let cur = 'curse';
+  const sorted = list => list.slice().sort((a, b) => (RK[a.rarity] ?? 9) - (RK[b.rarity] ?? 9) || a.name.localeCompare(b.name));
+  const chip = f => { const e = fighterElements.find(x => x.id === f.element); return `<button type="button" class="md-f ${RC[f.rarity] || ''}" data-n="${esc(f.name)}" title="${esc(f.char)}">${e ? e.icon + ' ' : ''}${esc(f.name)} ↗</button>`; };
+  function group(title, color, list, key) {
+    if (!list.length) return '';
+    const s = sorted(list), more = s.length > LIM;
+    return `<div class="md-box"><div class="md-h" style="color:${color}">${title} (${s.length})</div><div data-k="${key}">${s.slice(0, LIM).map(chip).join('')}</div>${more ? `<button type="button" class="md-more" data-all="${key}">Hiện tất cả ${s.length} ▾</button>` : ''}</div>`;
+  }
+  let groups = {};
+  function render() {
+    $('modChips').innerHTML = MODS.map(m => `<button type="button" class="md-chip${m.id === cur ? ' on' : ''}" data-m="${m.id}">${m.n}</button>`).join('');
+    const m = MODS.find(x => x.id === cur), hit = R(m.hit), v = R(m.v), vg = new RegExp(m.v, 'ig'), p = m.pierce ? R(m.pierce) : null;
+    const gives = fighters.filter(f => hit.test(f.passive));
+    const cnt = f => new Set((f.passive.match(vg) || []).map(x => x.toUpperCase())).size;
+    const vic = fighters.filter(f => cnt(f) >= (m.min || 1) && !(p && p.test(f.passive)));
+    const pierce = p ? fighters.filter(f => cnt(f) >= (m.min || 1) && p.test(f.passive)) : [];
+    groups = { g: sorted(gives), v: sorted(vic), p: sorted(pierce) };
+    $('modCount').textContent = gives.length + ' tướng gây · ' + vic.length + ' tướng bị khắc';
+    $('modBody').innerHTML =
+      `<div class="md-box" style="border-color:#7e22ce"><div class="md-h" style="color:#d8b4fe">${m.n}</div><div style="font-size:13px;color:#e2e8f0;line-height:1.5">${m.d}</div>${m.tip ? `<div class="md-t" style="margin-top:.35rem">💡 ${m.tip}</div>` : ''}</div>` +
+      group('⚔️ TƯỚNG GÂY ' + m.n, '#fb7185', gives, 'g') +
+      group('🎯 BỊ KHẮC: ' + m.vt.toUpperCase(), '#34d399', vic, 'v') +
+      (p ? group('🛡️ ' + m.pt.toUpperCase(), '#fbbf24', pierce, 'p') : '');
+  }
+  $('modSection').addEventListener('click', e => {
+    const c = e.target.closest('[data-m]'); if (c) { cur = c.dataset.m; render(); return; }
+    const f = e.target.closest('.md-f'); if (f) { goToFighter(f.dataset.n); return; }
+    const a = e.target.closest('[data-all]'); if (a) { const k = a.dataset.all; a.parentNode.querySelector('[data-k="' + k + '"]').innerHTML = groups[k].map(chip).join(''); a.remove(); }
+  });
+  render();
 })();
 </script>
 <script>
