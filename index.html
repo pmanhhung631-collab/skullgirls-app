@@ -1156,7 +1156,7 @@ html body #modSection .md-chip{background:#1a1119}
 <h2>Cẩm nang <span>tra cứu &amp; khắc chế</span></h2>
 <p>Chọn nhân vật, bấm vào fighter để xem nội tại và cách counter ngay, không cần cuộn tìm.</p>
 <div class="sg-stats"><b id="sgStChars">👤 18 nhân vật</b><b id="sgStFighters">⚔️ 307 fighter</b></div>
-<div class="sg-cta"><button type="button" class="p" id="sgGoWiki">📖 Wiki nhân vật</button><button type="button" class="s" id="sgGoList">🔎 Tra cứu chi tiết</button></div>
+<div class="sg-cta"><button type="button" class="p" id="sgGoWiki">📖 Wiki nhân vật</button></div>
 <div class="sg-cta sg-cta2"><button type="button" class="s" id="sgGoTeam">🧩 Xây đội hình</button><button type="button" class="s" id="sgGoQuiz">🎮 Đố counter</button></div>
 <div class="sg-cta sg-cta2"><button type="button" class="s" id="sgGoMod">🎯 Khắc chế Buff / Debuff</button></div>
 </div>
@@ -1175,7 +1175,6 @@ html body #modSection .md-chip{background:#1a1119}
 (function(){
   var go=function(id){var t=document.getElementById(id);if(!t)return;var h=document.querySelector('header');var y=t.getBoundingClientRect().top+window.scrollY-(h?h.offsetHeight:0)-8;window.scrollTo({top:y,behavior:'smooth'});};
   document.getElementById('sgGoWiki').addEventListener('click',function(){go('wikiSection')});
-  document.getElementById('sgGoList').addEventListener('click',function(){go('fighterSection')});
   document.getElementById('sgGoTeam').addEventListener('click',function(){go('teamSection')});
   document.getElementById('sgGoQuiz').addEventListener('click',function(){go('quizSection')});
   document.getElementById('sgGoMod').addEventListener('click',function(){go('modSection')});
@@ -1309,7 +1308,7 @@ html body #modSection .md-chip{background:#1a1119}
 <div id="modBody" style="display:grid;gap:.6rem"><div class="md-box" style="border-color:#7e22ce"><div class="md-h" style="color:#d8b4fe">CURSE</div><div style="font-size:13px;color:#e2e8f0;line-height:1.5">Phá hỏng BUFF: ngăn không cho áp dụng BUFF mới lên đối thủ.</div><div class="md-t" style="margin-top:.35rem">💡 Gỡ/né: IMMUNITY chặn DEBUFF mới (phải có trước), hoặc dùng fighter xóa DEBUFF.</div></div><div class="md-box"><div class="md-h" style="color:#fb7185">⚔️ TƯỚNG GÂY CURSE (27)</div><div data-k="g"><button type="button" class="md-f d" data-n="Apex Complex" title="Fukua">⚪ Apex Complex ↗</button><button type="button" class="md-f d" data-n="Beast King" title="Beowulf">🔥 Beast King ↗</button><button type="button" class="md-f d" data-n="Comet Custodian" title="Marie">🌪️ Comet Custodian ↗</button><button type="button" class="md-f d" data-n="Dark Might" title="Beowulf">🌙 Dark Might ↗</button><button type="button" class="md-f d" data-n="Fire Branded" title="Annie">🔥 Fire Branded ↗</button><button type="button" class="md-f d" data-n="Fortune Cookie" title="Ms. Fortune">🌙 Fortune Cookie ↗</button></div><button type="button" class="md-more" data-all="g" data-n="21">Xem thêm 21 tướng ▾</button></div><div class="md-box"><div class="md-h" style="color:#34d399">🎯 BỊ KHẮC: TƯỚNG SỐNG NHỜ TỰ CHO MÌNH BUFF (40)</div><div data-k="v"><button type="button" class="md-f d" data-n="Angel Maker" title="Umbrella">💧 Angel Maker ↗</button><button type="button" class="md-f d" data-n="Blue Streak" title="Filia">💧 Blue Streak ↗</button><button type="button" class="md-f d" data-n="Bombshell" title="Parasoul">⚪ Bombshell ↗</button><button type="button" class="md-f d" data-n="Deal Breaker" title="Peacock">🔥 Deal Breaker ↗</button><button type="button" class="md-f d" data-n="Eager Deceiver" title="Umbrella">⚪ Eager Deceiver ↗</button><button type="button" class="md-f d" data-n="Fortune Cookie" title="Ms. Fortune">🌙 Fortune Cookie ↗</button></div><button type="button" class="md-more" data-all="v" data-n="34">Xem thêm 34 tướng ▾</button></div></div>
 </section>
 <!-- Tra cứu Fighter -->
-<section class="glass rounded-2xl p-4 sm:p-5 space-y-3 shadow-xl" id="fighterSection">
+<section class="glass rounded-2xl p-4 sm:p-5 space-y-3 shadow-xl" id="fighterSection" hidden="" style="display:none">
 <div class="flex items-center gap-2">
 <svg class="lucide lucide-users w-5 h-5 text-pink-400" data-lucide="users" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M22 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
 <h2 class="text-base sm:text-lg font-bold text-slate-100">Tra Cứu Fighter &amp; Cách Counter</h2>
@@ -2955,11 +2954,9 @@ __SG_DATA__.fighters.forEach(function(f){if(f&&IMG[f.img])f.img=IMG[f.img]});
 <li data-t="#teamSection"><a><i>🧩</i><span>Xây đội hình (1 + 2 hỗ trợ)</span></a></li>
 <li data-t="#quizSection"><a><i>2.</i><span>Đố Counter</span></a></li>
 <li data-t="#modSection"><a><i>3.</i><span>Khắc chế theo Modifier</span></a></li>
-<li data-t="#fighterSection"><a><i>4.</i><span>Tra cứu fighter</span></a></li>
-<li data-t="#fighterList"><a class="sub"><i>4.1</i><span>Danh sách fighter</span></a></li>
-<li data-t="#bossSection"><a><i>5.</i><span>Boss</span></a></li>
+<li data-t="#bossSection"><a><i>4.</i><span>Boss</span></a></li>
 </ol></div></div></section>
-<section class="sgd-group open" id="sgGFlt"><button type="button" class="sgd-gh" aria-expanded="true"><span class="l">Bộ lọc fighter <b class="sgd-badge" id="sgBadge2" hidden="">0</b></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"></path></svg></button>
+<section class="sgd-group open" id="sgGFlt" hidden="" style="display:none"><button type="button" class="sgd-gh" aria-expanded="true"><span class="l">Bộ lọc fighter <b class="sgd-badge" id="sgBadge2" hidden="">0</b></span><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m6 15 6-6 6 6"></path></svg></button>
 <div class="sgd-gb"><div class="sgd-in" id="sgFilterMount"><div class="flex items-center gap-2 sgd-frow">
 <span class="w-16 shrink-0 text-[11px] font-bold text-slate-400">Hệ</span>
 <div class="flex gap-1.5 overflow-x-auto pb-1 flex-1" id="elemChips"></div>
@@ -3339,8 +3336,7 @@ __SG_DATA__.fighters.forEach(function(f){if(f&&IMG[f.img])f.img=IMG[f.img]});
     box.innerHTML = `<div class="wk-bar" id="wkBar"><div class="wk-bar1"><button type="button" class="wk-back" data-act="back">‹ Nhân vật</button><div class="wk-bt"><b>${esc(name)}</b><small id="wkBarSub"></small></div></div>
       <div class="wk-chips" id="wkRar"></div>
       <div class="wk-chips" id="wkEl">${['', ...els].map(id => { const e = id ? eo(id) : null; return `<button type="button" class="wk-chip ${elF === id ? 'on' : ''}" data-el="${id}">${e ? e.icon + ' ' + e.name : 'Tất cả hệ'}</button>`; }).join('')}</div></div>
-      <div id="wkSecs"></div>
-      <button type="button" class="wk-more" data-act="full-char">Mở bảng đầy đủ của ${esc(name)} (có bộ lọc) ↗</button>`;
+      <div id="wkSecs"></div>`;
     renderSecs();
     scrollToSec();
   }
